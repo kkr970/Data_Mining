@@ -1,0 +1,93 @@
+Python 3.9.6 (tags/v3.9.6:db3ff76, Jun 28 2021, 15:26:21) [MSC v.1929 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license()" for more information.
+>>> from bs4 import BeautifulSoup
+>>> html = '<h1 id="title">한빛출판네트워크</h1><div class="top"><ul class="menu"><li><a href=“http://www.hanbit.co.kr/member/login.html” class="login">로그인</a></li></ul><ul class="brand"><li><a href="http://www.hanbit.co.kr/media/">한빛미디어</li><li><a href="http://www.hanbit.co.kr/academy/">한빛아카데미</a></li></ul></div>'
+>>> soup = BeautifulSoup(html, 'html.parser')
+>>> print(soup.prettify)
+<bound method Tag.prettify of <h1 id="title">한빛출판네트워크</h1><div class="top"><ul class="menu"><li><a class="login" href="“http://www.hanbit.co.kr/member/login.html”">로그인</a></li></ul><ul class="brand"><li><a href="http://www.hanbit.co.kr/media/">한빛미디어</a></li><li><a href="http://www.hanbit.co.kr/academy/">한빛아카데미</a></li></ul></div>>
+>>> print(soup.prettify())
+<h1 id="title">
+ 한빛출판네트워크
+</h1>
+<div class="top">
+ <ul class="menu">
+  <li>
+   <a class="login" href="“http://www.hanbit.co.kr/member/login.html”">
+    로그인
+   </a>
+  </li>
+ </ul>
+ <ul class="brand">
+  <li>
+   <a href="http://www.hanbit.co.kr/media/">
+    한빛미디어
+   </a>
+  </li>
+  <li>
+   <a href="http://www.hanbit.co.kr/academy/">
+    한빛아카데미
+   </a>
+  </li>
+ </ul>
+</div>
+>>> soup.h1
+<h1 id="title">한빛출판네트워크</h1>
+>>> tag_h1 = soup.h1
+>>> tag_h1
+<h1 id="title">한빛출판네트워크</h1>
+>>> tag_div = soup.div
+>>> tag_div
+<div class="top"><ul class="menu"><li><a class="login" href="“http://www.hanbit.co.kr/member/login.html”">로그인</a></li></ul><ul class="brand"><li><a href="http://www.hanbit.co.kr/media/">한빛미디어</a></li><li><a href="http://www.hanbit.co.kr/academy/">한빛아카데미</a></li></ul></div>
+>>> tag_ul = soup.ul
+>>> tag_ul
+<ul class="menu"><li><a class="login" href="“http://www.hanbit.co.kr/member/login.html”">로그인</a></li></ul>
+>>> tag_li = soup.li
+>>> tag_li
+<li><a class="login" href="“http://www.hanbit.co.kr/member/login.html”">로그인</a></li>
+>>> tag_a = soup.a
+>>> tag_a
+<a class="login" href="“http://www.hanbit.co.kr/member/login.html”">로그인</a>
+>>> tag_ul_all = soup.find_all("ul")
+>>> tag_ul_all
+[<ul class="menu"><li><a class="login" href="“http://www.hanbit.co.kr/member/login.html”">로그인</a></li></ul>, <ul class="brand"><li><a href="http://www.hanbit.co.kr/media/">한빛미디어</a></li><li><a href="http://www.hanbit.co.kr/academy/">한빛아카데미</a></li></ul>]
+>>> tag_li_all = soup.find_all("li")
+>>> tag_li_all
+[<li><a class="login" href="“http://www.hanbit.co.kr/member/login.html”">로그인</a></li>, <li><a href="http://www.hanbit.co.kr/media/">한빛미디어</a></li>, <li><a href="http://www.hanbit.co.kr/academy/">한빛아카데미</a></li>]
+>>> tag_a_all = soup.find_all("a")
+>>> tag_a_all
+[<a class="login" href="“http://www.hanbit.co.kr/member/login.html”">로그인</a>, <a href="http://www.hanbit.co.kr/media/">한빛미디어</a>, <a href="http://www.hanbit.co.kr/academy/">한빛아카데미</a>]
+>>> tag_a.attrs
+{'href': '“http://www.hanbit.co.kr/member/login.html”', 'class': ['login']}
+>>> tag_a['href']
+'“http://www.hanbit.co.kr/member/login.html”'
+>>> tag_a['class']
+['login']
+>>> tag_a
+<a class="login" href="“http://www.hanbit.co.kr/member/login.html”">로그인</a>
+>>> tag_ul_2 = soup.find('ul', attrs={'class':'brand'})
+>>> tag_ul_2
+<ul class="brand"><li><a href="http://www.hanbit.co.kr/media/">한빛미디어</a></li><li><a href="http://www.hanbit.co.kr/academy/">한빛아카데미</a></li></ul>
+>>> title = soup.find(id='title')
+>>> title
+<h1 id="title">한빛출판네트워크</h1>
+>>> 
+>>> title.string
+'한빛출판네트워크'
+>>> tag_a.string
+'로그인'
+>>> li_list = soup.select("div>ul.brand>li")
+>>> li_list
+[<li><a href="http://www.hanbit.co.kr/media/">한빛미디어</a></li>, <li><a href="http://www.hanbit.co.kr/academy/">한빛아카데미</a></li>]
+>>> for li in li_list:
+	print(li.string)
+
+	
+한빛미디어
+한빛아카데미
+>>> for s in soup:
+	print(s.string)
+
+	
+한빛출판네트워크
+None
+>>> 
